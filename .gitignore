@@ -1,0 +1,38 @@
+# Pliki środowiska Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Pliki konfiguracyjne z wrażliwymi danymi
+.env
+prompt.txt
+
+# Pliki tymczasowe
+*.tmp
+*.temp
+*_audio.mp3
+temp_*.mp4
+temp_*.avi
+temp_*.mov
+
+# Pliki IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Pliki Streamlit
+.streamlit/
+
+# Logi
+*.log
