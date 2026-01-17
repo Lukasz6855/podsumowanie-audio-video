@@ -188,7 +188,9 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
             st.info(f"⏱️ **Długość:** {dlugosc_sformatowana}")  # Wyświetlenie długości w formacie X min Y sec
     
     # ===== SEKCJA PODSUMOWANIA - OPCJA SZYBKA =====
-    st.subheader("📋 Podsumowanie")  # Nagłówek podsekcji
+    st.markdown("---")
+    st.markdown("## 📋 Generowanie podsumowania")
+    st.markdown("---")
     
     # Utworzenie dwóch kolumn dla pól wyboru
     col1, col2 = st.columns(2)  # Dwie kolumny o równej szerokości
@@ -372,7 +374,7 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
             )
         
         # Przyciski kontroli edycji podsumowania
-        col_edit1, col_edit2, col_edit3, col_edit4 = st.columns([1, 1, 1, 2])  # Cztery kolumny dla przycisków edycji
+        col_edit1, col_edit2, col_edit3 = st.columns([1, 1, 1])  # Trzy kolumny dla przycisków edycji
         
         with col_edit1:  # Pierwsza kolumna - przycisk Edycja
             if st.button("✏️ Edycja", key="edit_summary_btn", disabled=st.session_state.edycja_podsumowania_aktywna or st.session_state.edycja_transkrypcji_aktywna):  # Przycisk Edycja (wyszarzony gdy jakakolwiek edycja aktywna)
@@ -410,24 +412,24 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
                 st.success("✅ Zmiany w podsumowaniu zostały zapisane!" + (" Audio podsumowania zostało zaktualizowane." if st.session_state.tryb_generowania == "audio" else ""))  # Komunikat sukcesu
                 st.rerun()  # Odświeżenie aplikacji
         
-        with col_edit4:  # Czwarta kolumna - przycisk Resetuj wszystko
-            if st.button("🔄 Resetuj wszystko", key="reset_all_btn", disabled=edycja_aktywna):  # Przycisk Resetuj wszystko (wyszarzony gdy edycja aktywna)
-                # Resetowanie wszystkich zmiennych do stanu początkowego
-                st.session_state.transkrypcja = None  # Wyczyszczenie transkrypcji
-                st.session_state.podsumowanie = None  # Wyczyszczenie podsumowania
-                st.session_state.sciezka_audio = None  # Wyczyszczenie ścieżki audio
-                st.session_state.sciezka_audio_podsumowania = None  # Wyczyszczenie ścieżki audio podsumowania
-                st.session_state.tryb_generowania = None  # Wyczyszczenie trybu generowania
-                st.session_state.edytowana_transkrypcja = None  # Wyczyszczenie edytowanej transkrypcji
-                st.session_state.edycja_podsumowania_aktywna = False  # Wyłączenie edycji podsumowania
-                st.session_state.edycja_transkrypcji_aktywna = False  # Wyłączenie edycji transkrypcji
-                st.session_state.podsumowanie_przed_edycja = None  # Wyczyszczenie kopii zapasowej podsumowania
-                st.session_state.transkrypcja_przed_edycja = None  # Wyczyszczenie kopii zapasowej transkrypcji
-                st.session_state.transkrypcja_zapisana = False  # Wyzerowanie flagi zapisu transkrypcji
-                st.session_state.edytowana_transkrypcja_temp = None  # Wyczyszczenie zmiennej tymczasowej transkrypcji
-                st.session_state.edytowane_podsumowanie_temp = None  # Wyczyszczenie zmiennej tymczasowej podsumowania
-                st.success("✅ Aplikacja została zresetowana!")  # Komunikat sukcesu
-                st.rerun()  # Odświeżenie aplikacji
+        # Przycisk Resetuj wszystko - szerszy, pod przyciskami edycji
+        if st.button("🔄 Resetuj wszystko i zacznij od nowa", key="reset_all_btn", use_container_width=True, disabled=edycja_aktywna):  # Przycisk Resetuj wszystko (wyszarzony gdy edycja aktywna)
+            # Resetowanie wszystkich zmiennych do stanu początkowego
+            st.session_state.transkrypcja = None  # Wyczyszczenie transkrypcji
+            st.session_state.podsumowanie = None  # Wyczyszczenie podsumowania
+            st.session_state.sciezka_audio = None  # Wyczyszczenie ścieżki audio
+            st.session_state.sciezka_audio_podsumowania = None  # Wyczyszczenie ścieżki audio podsumowania
+            st.session_state.tryb_generowania = None  # Wyczyszczenie trybu generowania
+            st.session_state.edytowana_transkrypcja = None  # Wyczyszczenie edytowanej transkrypcji
+            st.session_state.edycja_podsumowania_aktywna = False  # Wyłączenie edycji podsumowania
+            st.session_state.edycja_transkrypcji_aktywna = False  # Wyłączenie edycji transkrypcji
+            st.session_state.podsumowanie_przed_edycja = None  # Wyczyszczenie kopii zapasowej podsumowania
+            st.session_state.transkrypcja_przed_edycja = None  # Wyczyszczenie kopii zapasowej transkrypcji
+            st.session_state.transkrypcja_zapisana = False  # Wyzerowanie flagi zapisu transkrypcji
+            st.session_state.edytowana_transkrypcja_temp = None  # Wyczyszczenie zmiennej tymczasowej transkrypcji
+            st.session_state.edytowane_podsumowanie_temp = None  # Wyczyszczenie zmiennej tymczasowej podsumowania
+            st.success("✅ Aplikacja została zresetowana!")  # Komunikat sukcesu
+            st.rerun()  # Odświeżenie aplikacji
     
     # Wyświetlenie odtwarzacza audio podsumowania jeśli istnieje
     if st.session_state.sciezka_audio_podsumowania:  # Sprawdzenie czy audio podsumowania zostało wygenerowane
@@ -437,7 +439,9 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
     # ===== SEKCJA POBIERANIA WYNIKÓW =====
     # Wyświetlanie sekcji pobierania jeśli podsumowanie istnieje
     if st.session_state.podsumowanie:  # Sprawdzenie czy podsumowanie zostało wygenerowane
-        st.subheader("⬇️ Pobierz wyniki")  # Nagłówek podsekcji
+        st.markdown("---")
+        st.markdown("## ⬇️ Pobierz wyniki")
+        st.markdown("---")
         
         # Tworzenie kolumn dla przycisków pobierania
         if st.session_state.tryb_generowania == "audio" and st.session_state.sciezka_audio_podsumowania:  # Jeśli tryb audio
@@ -502,15 +506,16 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
                     )
     
     # ===== SEKCJA STEP-BY-STEP =====
-    st.markdown("---")  # Linia oddzielająca
-    st.markdown("### 🔧 Opcja zaawansowana (krok po kroku)")  # Nagłówek sekcji
+    st.markdown("---")
+    st.markdown("## 🔧 Audio i Transkrypcja")
+    st.markdown("---")
     
     # Inicjalizacja zmiennej ścieżki do transkrypcji
     sciezka_do_transkrypcji = None  # Domyślna wartość None
     
     # Sekcja konwersji audio dla plików wideo
     if rozszerzenie in ['.mp4', '.avi', '.mov']:  # Jeśli plik jest wideo
-        st.subheader("🎵 Ekstrakcja Audio")  # Nagłówek podsekcji
+        st.markdown("### 🎵 Ekstrakcja Audio")
         
         if st.button("Wyodrębnij audio z wideo", key="extract_audio", disabled=edycja_aktywna):  # Przycisk do ekstrakcji (wyszarzony gdy edycja aktywna)
             with st.spinner("Wyodrębnianie audio..."):  # Wskaźnik postępu
@@ -541,7 +546,7 @@ if st.session_state.sciezka_temp is not None:  # Sprawdzenie czy istnieje zapisa
         sciezka_do_transkrypcji = sciezka_temp  # Użycie oryginalnego pliku
     
     # Sekcja transkrypcji
-    st.subheader("📝 Transkrypcja")  # Nagłówek podsekcji
+    st.markdown("### 📝 Transkrypcja")
     
     if st.button("Rozpocznij transkrypcję", key="transcribe", disabled=edycja_aktywna):  # Przycisk rozpoczęcia transkrypcji (wyszarzony gdy edycja aktywna)
         if sciezka_do_transkrypcji:  # Sprawdzenie czy ścieżka istnieje

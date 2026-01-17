@@ -11,6 +11,7 @@ ENV/
 # Pliki konfiguracyjne z wrażliwymi danymi
 .env
 prompt.txt
+INSTRUKCJA.md
 
 # Pliki tymczasowe
 *.tmp
