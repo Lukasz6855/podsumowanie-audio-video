@@ -27,6 +27,8 @@ def pobierz_wideo_z_youtube(url):
         'outtmpl': os.path.join(katalog_temp, '%(title)s.%(ext)s'),  # Szablon nazwy pliku
         'quiet': False,  # Wyświetlanie postępu
         'no_warnings': False,  # Wyświetlanie ostrzeżeń
+        'extractor_args': {'youtube': {'player_client': ['android', 'web']}},  # Użyj klienta Android/Web
+        'nocheckcertificate': True,  # Wyłącz weryfikację certyfikatów
     }
     
     # Pobranie wideo
