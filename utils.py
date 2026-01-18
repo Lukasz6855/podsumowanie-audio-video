@@ -23,12 +23,18 @@ def pobierz_wideo_z_youtube(url):
     
     # Konfiguracja yt-dlp
     opcje_ydl = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',  # Najlepsza jakość MP4
+        'format': 'best[ext=mp4]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best',  # Najlepsza jakość MP4
         'outtmpl': os.path.join(katalog_temp, '%(title)s.%(ext)s'),  # Szablon nazwy pliku
         'quiet': False,  # Wyświetlanie postępu
         'no_warnings': False,  # Wyświetlanie ostrzeżeń
-        'extractor_args': {'youtube': {'player_client': ['android', 'web']}},  # Użyj klienta Android/Web
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['ios', 'android'],  # Użyj klienta iOS i Android
+                'player_skip': ['webpage', 'configs'],  # Pomiń webpage i configs
+            }
+        },
         'nocheckcertificate': True,  # Wyłącz weryfikację certyfikatów
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',  # User agent
     }
     
     # Pobranie wideo
