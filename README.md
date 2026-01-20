@@ -215,8 +215,8 @@ Aby zmienić głos, edytuj plik [app.py](app.py) i [utils.py](utils.py) - znajd�
 
 ## 📝 Licencja
 
-Projekt edukacyjny - swobodne użytkowanie.
+MIT
 
 ## 👨‍💻 Autor
 
-Aplikacja stworzona w ramach kursu "Od Zera do AI" - Moduł 8
+Lukasz_Es / Lukasz6855
